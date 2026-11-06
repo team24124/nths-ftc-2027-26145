@@ -40,7 +40,7 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
         //this.isReady = this.shooterMotor.getVelocity() < speed;
     }
 
-    public void setReverse(boolean reverse) {
+    public void reverse(boolean reverse) {
         this.reverse = reverse;
     }
 

@@ -35,7 +35,7 @@ public class Intake implements SubsystemBase, TelemetryObservable {
     public void setSpeed(double speed) {
         this.speed = speed;
     }
-    public void setReverse(boolean reverse) {
+    public void reverse(boolean reverse) {
         this.reverse = reverse;
     }
     public void manualSetPowerOverride(double p) {
