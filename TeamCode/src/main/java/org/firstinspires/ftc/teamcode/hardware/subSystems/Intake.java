@@ -1,12 +1,14 @@
-package org.firstinspires.ftc.teamcode.subSystems;
+package org.firstinspires.ftc.teamcode.hardware.subSystems;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemShoot;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemBase;
+import org.firstinspires.ftc.teamcode.utility.interfaces.TelemetryObservable;
 
-public class Intake implements SubsystemShoot {
+public class Intake implements SubsystemBase, TelemetryObservable {
     private final DcMotorEx intakemotor;
     private boolean running = false;
     private boolean reverse = false;
@@ -26,6 +28,8 @@ public class Intake implements SubsystemShoot {
             }else{
                 this.intakemotor.setPower(this.speed);
             }
+        } else {
+            this.intakemotor.setPower(0);
         }
     }
     public void setSpeed(double speed) {
@@ -43,5 +47,11 @@ public class Intake implements SubsystemShoot {
         return "Intake";
     }
 
-
+    @Override
+    public void updateTelemetry(Telemetry telemetry) {
+        telemetry.addLine("------- Intake -------");
+        telemetry.addData("Is running?", this.running);
+        telemetry.addData("Reverse?", this.reverse);
+        telemetry.addLine();
+    }
 }
