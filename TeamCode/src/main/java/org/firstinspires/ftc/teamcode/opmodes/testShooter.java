@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.subSystems.Shooter;
+import org.firstinspires.ftc.teamcode.utility.PIDF;
 
 @TeleOp (name = "shooterTest")
 public class testShooter extends OpMode {
@@ -17,6 +18,8 @@ public class testShooter extends OpMode {
     @Override
     public void loop() {
         robot.shooter.run(true);
+        robot.intake.run(true);
+        robot.tC.update();
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Robot {
     public final Intake intake;
     public final Shooter shooter;
     public final TelemetryControl tC;
-    public final Follower follower;
+    public Follower follower;
     public Robot(HardwareMap hm, Telemetry t) {
         intake = new Intake(hm);
         shooter = new Shooter(hm);

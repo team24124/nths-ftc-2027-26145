@@ -35,7 +35,7 @@ public class TeleOp1 extends OpMode {
         // See the note about this earlier on this page.
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
@@ -45,13 +45,13 @@ public class TeleOp1 extends OpMode {
             double rx = gamepad1.right_stick_x;
 
             if (gamepad2.a) {
-                shooterMotor.setPower(0.5);
+                shooterMotor.setPower(1);
             } else {
                 shooterMotor.setPower(0);
             }
 
             if (gamepad2.b) {
-                intakeMotor.setPower(0.5);
+                intakeMotor.setPower(0.4);
             } else{
                 intakeMotor.setPower(0);
             }

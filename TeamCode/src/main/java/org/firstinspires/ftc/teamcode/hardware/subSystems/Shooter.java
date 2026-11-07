@@ -16,28 +16,30 @@ import org.firstinspires.ftc.teamcode.utility.interfaces.TelemetryObservable;
 public class Shooter implements SubsystemBase, TelemetryObservable {
     private final DcMotorEx shooterMotor;
     private boolean reverse = false;
-    public static double speed = 1;
+    public static double speed = 1140;
     private boolean isReady = false;
     private final VoltageSensor vs;
     private final PIDF pid = new PIDF();
+    public static double p = 0.001;
+    public static double v = 0.00045;
 
     public Shooter(HardwareMap hw){
         this.shooterMotor = hw.get(DcMotorEx.class, "shooter");
-        this.shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         this.vs = hw.get(VoltageSensor.class, "Control Hub");
+        pid.setPV(p, v);
     }
 
     public void run(boolean thing){
+        pid.setPV(p, v);
         if(thing){
-            //double power = pid.calculate(this.shooterMotor.getVelocity(), this.speed, this.vs.getVoltage());
-            double power = speed;
+            double power = pid.calculate(this.shooterMotor.getVelocity(), this.speed, this.vs.getVoltage());
             if (reverse) {power *= -1;}
             this.shooterMotor.setPower(power);
         }else{
             this.shooterMotor.setPower(0);
         }
-        //this.isReady = this.shooterMotor.getVelocity() < speed;
+        this.isReady = this.shooterMotor.getVelocity() < speed;
     }
 
     public void reverse(boolean reverse) {
@@ -62,4 +64,3 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
     }
 
 }
-
