@@ -7,7 +7,8 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.subSystems.Shooter;
 import org.firstinspires.ftc.teamcode.utility.PIDF;
 
-@TeleOp (name = "shooterTest")
+@TeleOp (group = "tuners", name = "shooterTest")
+
 public class testShooter extends OpMode {
     Robot robot;
     @Override

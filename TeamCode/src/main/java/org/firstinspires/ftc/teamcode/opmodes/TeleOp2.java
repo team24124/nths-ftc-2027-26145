@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.List;
 
-@TeleOp(name = "Teleop2")
+@TeleOp(group = "!", name = "new Tele")
 public class TeleOp2 extends OpMode {
     private Robot robot;
     private GamepadEx g1, g2;
@@ -38,17 +38,24 @@ public class TeleOp2 extends OpMode {
         }
 
         //assert robot.follower != null;
+
+        // Drive
         robot.follower.manual(
-                -gamepad1.left_stick_y,
-                -gamepad1.left_stick_x,
-                gamepad1.right_stick_x
+                -g1.getLeftY(),
+                g1.getLeftX() * 1.1,
+                g1.getRightX()
         );
         robot.follower.update();
 
+        // Intake
         robot.intake.run(g2.isDown(GamepadKeys.Button.A));
         robot.intake.reverse(g2.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
+        // Shooter
         robot.shooter.reverse(g2.isDown(GamepadKeys.Button.B));
         robot.shooter.run(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
+
+        // Telemetry
+        robot.tC.update();
     }
 }
