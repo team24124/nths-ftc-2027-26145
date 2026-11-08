@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @TeleOp(name = "TeleOp1")
 public class TeleOp1 extends OpMode {
-    private Follower follower;
 
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;

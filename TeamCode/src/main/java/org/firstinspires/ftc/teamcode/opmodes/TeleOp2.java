@@ -37,7 +37,10 @@ public class TeleOp2 extends OpMode {
             hub.clearBulkCache();
         }
 
+
+
         //assert robot.follower != null;
+        /*
         robot.follower.manual(
                 -gamepad1.left_stick_y,
                 -gamepad1.left_stick_x,
@@ -45,10 +48,44 @@ public class TeleOp2 extends OpMode {
         );
         robot.follower.update();
 
+         */
+
         robot.intake.run(g2.isDown(GamepadKeys.Button.A));
         robot.intake.reverse(g2.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
         robot.shooter.reverse(g2.isDown(GamepadKeys.Button.B));
         robot.shooter.run(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
+
+
+        //maybe fix driveing truning
+        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "fl");
+        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "fr");
+        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "bl");
+        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "br");
+
+        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "fl");
+        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "fr");
+        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "bl");
+        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "br");
+
+        robot.drivefix.run(g1.getLeftY() > 0.5, "fl");
+        robot.drivefix.run(g1.getLeftY() > 0.5, "fr");
+        robot.drivefix.run(g1.getLeftY() > 0.5, "bl");
+        robot.drivefix.run(g1.getLeftY() > 0.5, "br");
+
+        robot.drivefix.reverse(g1.getLeftY() < -0.5, "fl");
+        robot.drivefix.reverse(g1.getLeftY() < -0.5, "fr");
+        robot.drivefix.reverse(g1.getLeftY() < -0.5, "bl");
+        robot.drivefix.reverse(g1.getLeftY() < -0.5, "br");
+
+        robot.drivefix.run(g1.getLeftX() > 0.5, "fl");
+        robot.drivefix.reverse(g1.getLeftX() > 0.5, "fr");
+        robot.drivefix.reverse(g1.getLeftX() > 0.5, "bl");
+        robot.drivefix.run(g1.getLeftX() > 0.5, "br");
+
+        robot.drivefix.reverse(g1.getLeftX() < -0.5, "fl");
+        robot.drivefix.run(g1.getLeftX() < -0.5, "fr");
+        robot.drivefix.run(g1.getLeftX() < -0.5, "bl");
+        robot.drivefix.reverse(g1.getLeftX() < -0.5, "br");
     }
 }
