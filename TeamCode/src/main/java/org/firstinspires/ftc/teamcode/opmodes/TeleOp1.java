@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-@TeleOp(name = "TeleOp1")
+@TeleOp(group = "!", name = "old tele")
 public class TeleOp1 extends OpMode {
 
     DcMotor frontLeftMotor;
