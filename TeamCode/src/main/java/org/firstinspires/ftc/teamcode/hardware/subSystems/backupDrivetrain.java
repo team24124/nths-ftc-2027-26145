@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemBase;
 
 
-//short trem fix by not using pedro fix latery
+//short trem fix by not using pedro fix later
 public class backupDrivetrain implements SubsystemBase {
     private final DcMotorEx fl;
     private final DcMotorEx fr;
