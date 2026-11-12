@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.List;
 
-@TeleOp(name = "Teleop2")
+@TeleOp(name = "Teleop 2")
 public class TeleOp2 extends OpMode {
     private Robot robot;
     private GamepadEx g1, g2;
@@ -50,42 +50,31 @@ public class TeleOp2 extends OpMode {
 
          */
 
-        robot.intake.run(g2.isDown(GamepadKeys.Button.A));
+        robot.intake.run(g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.5);
         robot.intake.reverse(g2.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
-        robot.shooter.reverse(g2.isDown(GamepadKeys.Button.B));
-        robot.shooter.run(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
+        robot.shooter.run(g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) >= 0.5);
+        robot.shooter.reverse(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
 
 
-        //maybe fix driveing truning
-        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "fl");
-        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "fr");
-        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "bl");
-        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_LEFT), "br");
+        double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+        double rx = gamepad1.right_stick_x;
 
-        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "fl");
-        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "fr");
-        robot.drivefix.run(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "bl");
-        robot.drivefix.reverse(g1.isDown(GamepadKeys.Button.DPAD_RIGHT), "br");
+        // Denominator is the largest motor power (absolute value) or 1
+        // This ensures all the powers maintain the same ratio,
+        // but only if at least one is out of the range [-1, 1]
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1) * 1.5;
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
 
-        robot.drivefix.run(g1.getLeftY() > 0.5, "fl");
-        robot.drivefix.run(g1.getLeftY() > 0.5, "fr");
-        robot.drivefix.run(g1.getLeftY() > 0.5, "bl");
-        robot.drivefix.run(g1.getLeftY() > 0.5, "br");
+        robot.drivefix.fl.setPower(frontLeftPower);
+        robot.drivefix.bl.setPower(backLeftPower);
+        robot.drivefix.fr.setPower(frontRightPower);
+        robot.drivefix.br.setPower(backRightPower);
 
-        robot.drivefix.reverse(g1.getLeftY() < -0.5, "fl");
-        robot.drivefix.reverse(g1.getLeftY() < -0.5, "fr");
-        robot.drivefix.reverse(g1.getLeftY() < -0.5, "bl");
-        robot.drivefix.reverse(g1.getLeftY() < -0.5, "br");
-
-        robot.drivefix.run(g1.getLeftX() > 0.5, "fl");
-        robot.drivefix.reverse(g1.getLeftX() > 0.5, "fr");
-        robot.drivefix.reverse(g1.getLeftX() > 0.5, "bl");
-        robot.drivefix.run(g1.getLeftX() > 0.5, "br");
-
-        robot.drivefix.reverse(g1.getLeftX() < -0.5, "fl");
-        robot.drivefix.run(g1.getLeftX() < -0.5, "fr");
-        robot.drivefix.run(g1.getLeftX() < -0.5, "bl");
-        robot.drivefix.reverse(g1.getLeftX() < -0.5, "br");
+        robot.tC.update();
     }
 }

@@ -9,10 +9,10 @@ import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemBase;
 
 //short trem fix by not using pedro fix later
 public class backupDrivetrain implements SubsystemBase {
-    private final DcMotorEx fl;
-    private final DcMotorEx fr;
-    private final DcMotorEx bl;
-    private final DcMotorEx br;
+    public final DcMotorEx fl;
+    public final DcMotorEx fr;
+    public final DcMotorEx bl;
+    public final DcMotorEx br;
     public backupDrivetrain(HardwareMap HM){
         this.fl = HM.get(DcMotorEx.class, "fl");
         this.fr = HM.get(DcMotorEx.class, "fr");
