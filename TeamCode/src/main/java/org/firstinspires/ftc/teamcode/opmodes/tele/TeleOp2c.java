@@ -1,20 +1,18 @@
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.opmodes.tele;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.List;
 
-@TeleOp(name = "Teleop 2")
-public class TeleOp2 extends OpMode {
+@TeleOp(name = "Teleop 2 c")
+public class TeleOp2c extends OpMode {
     private Robot robot;
     private GamepadEx g1, g2;
 
