@@ -17,6 +17,7 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
     private final DcMotorEx shooterMotor;
     private boolean reverse = false;
     public static double speed = 1140;
+    public static double passiveSpeed = -200;
     private boolean isReady = false;
     private final VoltageSensor vs;
     private final PIDF pid = new PIDF();
@@ -32,13 +33,15 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
 
     public void run(boolean thing){
         pid.setPV(p, v);
-        double power = pid.calculate(this.shooterMotor.getVelocity(), this.speed, this.vs.getVoltage());
+        double power;
         if(thing){
+            power = pid.calculate(this.shooterMotor.getVelocity(), this.speed, this.vs.getVoltage());
             if (reverse) {power *= -1;}
-            this.shooterMotor.setPower(power);
         }else{
-            this.shooterMotor.setPower(power/9);
+            power = pid.calculate(this.shooterMotor.getVelocity(), this.passiveSpeed, this.vs.getVoltage());
         }
+
+        this.shooterMotor.setPower(power);
         this.isReady = this.shooterMotor.getVelocity() < speed;
     }
 
