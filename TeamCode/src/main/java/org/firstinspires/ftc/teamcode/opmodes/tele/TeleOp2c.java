@@ -35,19 +35,6 @@ public class TeleOp2c extends OpMode {
             hub.clearBulkCache();
         }
 
-
-
-        //assert robot.follower != null;
-        /*
-        robot.follower.manual(
-                -gamepad1.left_stick_y,
-                -gamepad1.left_stick_x,
-                gamepad1.right_stick_x
-        );
-        robot.follower.update();
-
-         */
-
         robot.intake.run(g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.5);
         robot.intake.reverse(g2.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
@@ -55,23 +42,11 @@ public class TeleOp2c extends OpMode {
         robot.shooter.reverse(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
 
 
-        double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-        double rx = gamepad1.right_stick_x;
+        double y = -g1.getLeftY(); // Remember, Y stick value is reversed
+        double x = g1.getLeftX() * 1.1; // Counteract imperfect strafing
+        double rx = g1.getRightX();
 
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1) * 1.5;
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
-
-        robot.drivefix.fl.setPower(frontLeftPower);
-        robot.drivefix.bl.setPower(backLeftPower);
-        robot.drivefix.fr.setPower(frontRightPower);
-        robot.drivefix.br.setPower(backRightPower);
+        robot.drivetrain.run(x, y, rx);
 
         robot.tC.update();
     }

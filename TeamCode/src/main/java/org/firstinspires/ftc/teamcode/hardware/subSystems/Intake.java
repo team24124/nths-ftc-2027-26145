@@ -49,7 +49,6 @@ public class Intake implements SubsystemBase, TelemetryObservable {
 
     @Override
     public void updateTelemetry(Telemetry telemetry) {
-        telemetry.addLine("------- Intake -------");
         telemetry.addData("Is running?", this.running);
         telemetry.addData("Reverse?", this.reverse);
         telemetry.addLine();

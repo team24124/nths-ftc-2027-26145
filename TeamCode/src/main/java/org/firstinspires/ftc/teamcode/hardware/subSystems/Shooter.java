@@ -60,7 +60,6 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
 
     @Override
     public void updateTelemetry(Telemetry telemetry) {
-        telemetry.addLine("------- Shooter -------");
         telemetry.addData("Shooter RPM", this.shooterMotor.getVelocity());
         telemetry.addData("Shooter is ready?", this.isReady);
         telemetry.addLine();
