@@ -30,7 +30,7 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
         this.vs = hw.get(VoltageSensor.class, "Control Hub");
         pid.setPV(p, v);
     }
-    //hi
+
     public void run(boolean thing){
         pid.setPV(p, v);
         double power;
