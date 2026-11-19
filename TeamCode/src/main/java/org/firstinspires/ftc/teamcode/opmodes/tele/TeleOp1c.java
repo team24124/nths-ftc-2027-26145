@@ -40,9 +40,13 @@ public class TeleOp1c extends OpMode {
         robot.shooter.reverse(g1.isDown(GamepadKeys.Button.RIGHT_BUMPER));
 
 
-        double y = -g1.getLeftY(); // Remember, Y stick value is reversed
+        double y = g1.getLeftY(); // Remember, Y stick value is reversed
         double x = g1.getLeftX() * 1.1; // Counteract imperfect strafing
         double rx = g1.getRightX();
+
+        if (g1.wasJustPressed(GamepadKeys.Button.A)) {
+            robot.intake.toggleGate();
+        }
 
         robot.drivetrain.run(x, y, rx);
 

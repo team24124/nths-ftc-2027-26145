@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware.subSystems;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemBase;
@@ -10,14 +11,17 @@ import org.firstinspires.ftc.teamcode.utility.interfaces.TelemetryObservable;
 
 public class Intake implements SubsystemBase, TelemetryObservable {
     private final DcMotorEx intakemotor;
+    private final Servo gate;
     private boolean running = false;
     private boolean reverse = false;
     private double speed = 1;
+    private boolean gateOpen = false;
 
     public Intake(HardwareMap HM){
         this.intakemotor = HM.get(DcMotorEx.class, "intake");
         this.intakemotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         this.intakemotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.gate = HM.get(Servo.class, "gate");
     }
 
     public void run(boolean run){
@@ -30,6 +34,15 @@ public class Intake implements SubsystemBase, TelemetryObservable {
             }
         } else {
             this.intakemotor.setPower(0);
+        }
+    }
+
+    public void toggleGate() {
+        this.gateOpen = !this.gateOpen;
+        if (gateOpen) {
+            gate.setPosition(0.4);
+        } else {
+            gate.setPosition(0);
         }
     }
     public void setSpeed(double speed) {
@@ -51,6 +64,7 @@ public class Intake implements SubsystemBase, TelemetryObservable {
     public void updateTelemetry(Telemetry telemetry) {
         telemetry.addData("Is running?", this.running);
         telemetry.addData("Reverse?", this.reverse);
+        telemetry.addData("Gate position", this.gate.getPosition());
         telemetry.addLine();
     }
 }

@@ -41,8 +41,11 @@ public class TeleOp2c extends OpMode {
         robot.shooter.run(g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) >= 0.5);
         robot.shooter.reverse(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
 
+        if (g2.wasJustPressed(GamepadKeys.Button.A)) {
+            robot.intake.toggleGate();
+        }
 
-        double y = -g1.getLeftY(); // Remember, Y stick value is reversed
+        double y = g1.getLeftY(); // Remember, Y stick value is reversed
         double x = g1.getLeftX() * 1.1; // Counteract imperfect strafing
         double rx = g1.getRightX();
 

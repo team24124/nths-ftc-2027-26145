@@ -38,7 +38,7 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
             power = pid.calculate(this.shooterMotor.getVelocity(), this.speed, this.vs.getVoltage());
             if (reverse) {power *= -1;}
         }else{
-            power = pid.calculate(this.shooterMotor.getVelocity(), this.passiveSpeed, this.vs.getVoltage());
+            power = -0.15;
         }
 
         this.shooterMotor.setPower(power);
