@@ -32,7 +32,7 @@ public class TeleOp1c extends OpMode {
         for (LynxModule hub : hubs) {
             hub.clearBulkCache();
         }
-
+        boolean bugs = false;
         robot.intake.run(g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.5);
         robot.intake.reverse(g1.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
@@ -44,10 +44,7 @@ public class TeleOp1c extends OpMode {
         double x = g1.getLeftX() * 1.1; // Counteract imperfect strafing
         double rx = g1.getRightX();
 
-        if (g1.wasJustPressed(GamepadKeys.Button.A)) {
-            robot.intake.toggleGate();
-        }
-
+        robot.intake.toggleGate(g1.isDown(GamepadKeys.Button.A));
         robot.drivetrain.run(x, y, rx);
 
         robot.tC.update();

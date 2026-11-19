@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware.subSystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemBase;
 import org.firstinspires.ftc.teamcode.utility.interfaces.TelemetryObservable;
 
+@Config
 public class Intake implements SubsystemBase, TelemetryObservable {
     private final DcMotorEx intakemotor;
     private final Servo gate;
@@ -16,12 +18,14 @@ public class Intake implements SubsystemBase, TelemetryObservable {
     private boolean reverse = false;
     private double speed = 1;
     private boolean gateOpen = false;
+    public static double pos = 0;
 
     public Intake(HardwareMap HM){
         this.intakemotor = HM.get(DcMotorEx.class, "intake");
         this.intakemotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         this.intakemotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.gate = HM.get(Servo.class, "gate");
+        this.gate.setPosition(1);
     }
 
     public void run(boolean run){
@@ -37,13 +41,17 @@ public class Intake implements SubsystemBase, TelemetryObservable {
         }
     }
 
-    public void toggleGate() {
-        this.gateOpen = !this.gateOpen;
-        if (gateOpen) {
-            gate.setPosition(0.4);
+    public void toggleGate(boolean runGate) {
+        if (runGate) {
+            this.gate.setPosition(0.7);
         } else {
-            gate.setPosition(0);
+            this.gate.setPosition(1);
         }
+        this.gateOpen = runGate;
+    }
+
+    public void setGate() {
+        this.gate.setPosition(this.pos);
     }
     public void setSpeed(double speed) {
         this.speed = speed;
@@ -65,6 +73,7 @@ public class Intake implements SubsystemBase, TelemetryObservable {
         telemetry.addData("Is running?", this.running);
         telemetry.addData("Reverse?", this.reverse);
         telemetry.addData("Gate position", this.gate.getPosition());
+        telemetry.addData("Gate state", this.gateOpen);
         telemetry.addLine();
     }
 }
