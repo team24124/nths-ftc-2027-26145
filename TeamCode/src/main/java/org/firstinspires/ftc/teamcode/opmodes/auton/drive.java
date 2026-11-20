@@ -24,7 +24,7 @@ public class drive  extends LinearOpMode {
         robot.drivetrain.bl.setPower(-0.5);
         robot.drivetrain.br.setPower(-0.5);
 
-        while (opModeIsActive() && timer.milliseconds() < 600) {
+        while (opModeIsActive() && timer.milliseconds() < 350) {
             idle();
         }
 
