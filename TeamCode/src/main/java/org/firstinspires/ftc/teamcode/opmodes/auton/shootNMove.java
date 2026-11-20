@@ -20,21 +20,37 @@ public class shootNMove extends LinearOpMode {
             while (opModeIsActive() && timer.milliseconds() < 3000) {
                 robot.shooter.run(true);
             }
+
+            final double CLOSE_MS      = 500;   // every closed phase
+            final double OPEN_PULSE_MS = 200;   // each short open pulse
+            final int    PULSES        = 3;     // number of short open pulses
+            final double FINAL_OPEN_MS = 2000;  // last long open
+
+            double cycleMs       = CLOSE_MS + OPEN_PULSE_MS;        // 700 (close then open)
+            double pulsesEnd     = PULSES * cycleMs;                // 2100
+            double finalCloseEnd = pulsesEnd + CLOSE_MS;            // 2600
+            double totalTime     = finalCloseEnd + FINAL_OPEN_MS;   // 4600
+
             timer.reset();
 
-            while (opModeIsActive() && timer.milliseconds() < 5000) {
+            while (opModeIsActive() && timer.milliseconds() < totalTime) {
                 robot.shooter.run(true);
                 robot.intake.run(true);
 
-                double currentTime = timer.milliseconds();
+                double t = timer.milliseconds();
+                boolean isGateOpen;
 
-                if (currentTime < 3000) {
-                    int phase = (int) (currentTime / 500);
-                    boolean isGateOpen = (phase % 2 == 0);
-                    robot.intake.toggleGate(isGateOpen);
+                if (t < pulsesEnd) {
+                    // Repeating 700ms cycle: first 500ms closed, last 200ms open
+                    double timeInCycle = t % cycleMs;
+                    isGateOpen = (timeInCycle >= CLOSE_MS);
+                } else if (t < finalCloseEnd) {
+                    isGateOpen = false;   // final 500ms close
                 } else {
-                    robot.intake.toggleGate(true);
+                    isGateOpen = true;    // final 2000ms open
                 }
+
+                robot.intake.toggleGate(isGateOpen);
             }
             timer.reset();
 
