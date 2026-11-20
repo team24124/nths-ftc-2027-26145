@@ -17,17 +17,28 @@ public class shootNMove extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
             timer.reset();
-            while (timer.milliseconds() < 3000) {
+            while (opModeIsActive() && timer.milliseconds() < 3000) {
                 robot.shooter.run(true);
             }
             timer.reset();
 
-            while (timer.milliseconds() < 1000) {
+            while (opModeIsActive() && timer.milliseconds() < 5000) {
                 robot.shooter.run(true);
                 robot.intake.run(true);
+
+                double currentTime = timer.milliseconds();
+
+                if (currentTime < 3000) {
+                    int phase = (int) (currentTime / 500);
+                    boolean isGateOpen = (phase % 2 == 0);
+                    robot.intake.toggleGate(isGateOpen);
+                } else {
+                    robot.intake.toggleGate(true);
+                }
             }
             timer.reset();
 
+            robot.intake.toggleGate(false);
             robot.intake.run(false);
             robot.shooter.run(false);
 
@@ -36,7 +47,7 @@ public class shootNMove extends LinearOpMode {
             robot.drivetrain.bl.setPower(-0.5);
             robot.drivetrain.br.setPower(-0.5);
 
-            while (timer.milliseconds() < 600) {idle();}
+            while (opModeIsActive() && timer.milliseconds() < 600) {idle();}
 
             robot.drivetrain.fl.setPower(0);
             robot.drivetrain.fr.setPower(0);

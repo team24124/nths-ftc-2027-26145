@@ -27,6 +27,7 @@ public class TeleOp2c extends OpMode {
         robot = new Robot(hardwareMap, telemetry);
         g1 = new GamepadEx(gamepad1);
         g2 = new GamepadEx(gamepad2);
+        robot.intake.toggleGate(false);
     }
 
     @Override
