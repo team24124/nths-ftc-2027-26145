@@ -20,6 +20,14 @@ public class Robot {
         tC = new TelemetryControl(t);
         tC
                 .subscribe(intake)
-                .subscribe(shooter);
+                .subscribe(shooter)
+                .subscribe(drivetrain);
+    }
+
+    public void stop() {
+        tC.unsubscribeAll();
+        intake.setPower(0);
+        shooter.setPower(0);
+        drivetrain.setPowers(0,0,0,0);
     }
 }

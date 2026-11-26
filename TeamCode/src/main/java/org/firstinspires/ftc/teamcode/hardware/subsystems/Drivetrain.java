@@ -4,11 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.utility.interfaces.SubsystemBase;
+import org.firstinspires.ftc.teamcode.utility.interfaces.TelemetryObservable;
 
 
 //short trem fix by not using pedro fix later
-public class Drivetrain implements SubsystemBase {
+public class Drivetrain implements SubsystemBase, TelemetryObservable {
     public final DcMotorEx fl;
     public final DcMotorEx fr;
     public final DcMotorEx bl;
@@ -25,7 +27,7 @@ public class Drivetrain implements SubsystemBase {
     }
 
     public void run(double x, double y, double rx) {
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1) * 1.5;
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
@@ -37,8 +39,24 @@ public class Drivetrain implements SubsystemBase {
         br.setPower(backRightPower);
     }
 
+    public void setPowers(double fl, double fr, double bl, double br) {
+        this.fl.setPower(fl);
+        this.fr.setPower(fr);
+        this.bl.setPower(bl);
+        this.br.setPower(br);
+    }
+
     @Override
     public String getName() {
         return "backupDrivetrain";
+    }
+
+    @Override
+    public void updateTelemetry(Telemetry telemetry) {
+        telemetry.addData("FL speed", fl.getPower());
+        telemetry.addData("FR speed", fr.getPower());
+        telemetry.addData("BL speed", bl.getPower());
+        telemetry.addData("BR speed", br.getPower());
+        telemetry.addLine();
     }
 }

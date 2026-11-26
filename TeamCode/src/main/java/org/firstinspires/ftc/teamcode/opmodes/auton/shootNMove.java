@@ -58,18 +58,11 @@ public class shootNMove extends LinearOpMode {
             robot.intake.run(false);
             robot.shooter.run(false);
 
-            robot.drivetrain.fl.setPower(-0.5);
-            robot.drivetrain.fr.setPower(-0.5);
-            robot.drivetrain.bl.setPower(-0.5);
-            robot.drivetrain.br.setPower(-0.5);
+            robot.drivetrain.setPowers(-0.5,-0.5,-0.5,-0.5);
 
             while (opModeIsActive() && timer.milliseconds() < 600) {idle();}
 
-            robot.drivetrain.fl.setPower(0);
-            robot.drivetrain.fr.setPower(0);
-            robot.drivetrain.bl.setPower(0);
-            robot.drivetrain.br.setPower(0);
-
+            robot.drivetrain.setPowers(0,0,0,0);
         }
     }
 }

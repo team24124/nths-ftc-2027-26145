@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.List;
 
-@TeleOp(name = "Teleop 2 c")
+@TeleOp(name = "Teleop 2c", group = "!")
 public class Tele2c extends OpMode {
     private Robot robot;
     private GamepadEx g1, g2;
@@ -36,20 +36,24 @@ public class Tele2c extends OpMode {
             hub.clearBulkCache();
         }
 
-        robot.intake.run(g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.5);
+        robot.intake.run(g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.1);
         robot.intake.reverse(g2.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
-        robot.shooter.run(g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) >= 0.5);
+        robot.shooter.run(g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) >= 0.1);
         robot.shooter.reverse(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER));
 
         robot.intake.toggleGate(g2.isDown(GamepadKeys.Button.A));
 
-        double y = g1.getLeftY(); // Remember, Y stick value is reversed
-        double x = g1.getLeftX() * 1.1; // Counteract imperfect strafing
+        double y = g1.getLeftY();
+        double x = g1.getLeftX() * 1.1;
         double rx = g1.getRightX();
-
         robot.drivetrain.run(x, y, rx);
 
         robot.tC.update();
+    }
+
+    @Override
+    public void stop() {
+        robot.stop();
     }
 }

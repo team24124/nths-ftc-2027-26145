@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 import java.util.List;
 
-@TeleOp(name = "Teleop 1 c")
+@TeleOp(name = "Teleop 1c", group = "!")
 public class Tele1c extends OpMode {
     private Robot robot;
     private GamepadEx g1;
@@ -34,20 +34,24 @@ public class Tele1c extends OpMode {
             hub.clearBulkCache();
         }
         boolean bugs = false;
-        robot.intake.run(g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.5);
+        robot.intake.run(g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) >= 0.1);
         robot.intake.reverse(g1.isDown(GamepadKeys.Button.LEFT_BUMPER));
 
-        robot.shooter.run(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) >= 0.5);
+        robot.shooter.run(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) >= 0.1);
         robot.shooter.reverse(g1.isDown(GamepadKeys.Button.RIGHT_BUMPER));
 
-
-        double y = g1.getLeftY(); // Remember, Y stick value is reversed
-        double x = g1.getLeftX() * 1.1; // Counteract imperfect strafing
-        double rx = g1.getRightX();
-
         robot.intake.toggleGate(g1.isDown(GamepadKeys.Button.A));
+
+        double y = g1.getLeftY();
+        double x = g1.getLeftX() * 1.1;
+        double rx = g1.getRightX();
         robot.drivetrain.run(x, y, rx);
 
         robot.tC.update();
+    }
+
+    @Override
+    public void stop() {
+        robot.stop();
     }
 }
