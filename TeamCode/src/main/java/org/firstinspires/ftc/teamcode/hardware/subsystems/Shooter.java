@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware.subSystems;
+package org.firstinspires.ftc.teamcode.hardware.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,8 +15,9 @@ import org.firstinspires.ftc.teamcode.utility.interfaces.TelemetryObservable;
 @Config
 public class Shooter implements SubsystemBase, TelemetryObservable {
     private final DcMotorEx shooterMotor;
+    private final DcMotorEx shooterMotor2;
     private boolean reverse = false;
-    public static double speed = 1140;
+    public static double speed = 1220;
     public static double passiveSpeed = -200;
     private boolean isReady = false;
     private final VoltageSensor vs;
@@ -27,6 +28,9 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
     public Shooter(HardwareMap hw){
         this.shooterMotor = hw.get(DcMotorEx.class, "shooter");
         this.shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.shooterMotor2 = hw.get(DcMotorEx.class, "shooter2");
+        this.shooterMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.shooterMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
         this.vs = hw.get(VoltageSensor.class, "Control Hub");
         pid.setPV(p, v);
     }
@@ -42,11 +46,17 @@ public class Shooter implements SubsystemBase, TelemetryObservable {
         }
 
         this.shooterMotor.setPower(power);
+        this.shooterMotor2.setPower(power);
         this.isReady = this.shooterMotor.getVelocity() < speed;
     }
 
     public void reverse(boolean reverse) {
         this.reverse = reverse;
+    }
+
+    public void setPower(double p) {
+        this.shooterMotor.setPower(p);
+        this.shooterMotor2.setPower(p);
     }
 
     public void setPV(double p, double v) {

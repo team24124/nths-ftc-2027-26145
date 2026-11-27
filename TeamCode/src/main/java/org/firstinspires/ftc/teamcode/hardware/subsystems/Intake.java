@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware.subSystems;
+package org.firstinspires.ftc.teamcode.hardware.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -53,14 +53,11 @@ public class Intake implements SubsystemBase, TelemetryObservable {
     public void setGate() {
         this.gate.setPosition(this.pos);
     }
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setPower(double p) {
+        this.intakemotor.setPower(0);
     }
     public void reverse(boolean reverse) {
         this.reverse = reverse;
-    }
-    public void manualSetPowerOverride(double p) {
-        this.intakemotor.setPower(p);
     }
 
     @Override

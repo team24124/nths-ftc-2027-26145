@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 //just drive to park start at back wall right behind parking spot
-@Autonomous(name = "move Forward", group = "Autonomous")
+@Autonomous(name = "Move Forward", group = "!")
 public class drive  extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -29,9 +29,6 @@ public class drive  extends LinearOpMode {
             idle();
         }
 
-        robot.drivetrain.fl.setPower(0);
-        robot.drivetrain.fr.setPower(0);
-        robot.drivetrain.bl.setPower(0);
-        robot.drivetrain.br.setPower(0);
+        robot.stop();
     }
 }

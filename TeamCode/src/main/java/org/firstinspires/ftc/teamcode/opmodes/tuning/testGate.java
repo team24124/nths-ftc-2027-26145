@@ -17,4 +17,9 @@ public class testGate extends OpMode {
     public void loop() {
         robot.intake.setGate();
     }
+
+    @Override
+    public void stop() {
+        robot.stop();
+    }
 }

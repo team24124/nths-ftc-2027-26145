@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
-@Autonomous(name = "Shoot Move Forward", group = "Autonomous")
+@Autonomous(name = "Shoot Move Forward", group = "!")
 public class shootNMove extends LinearOpMode {
 
     @Override
@@ -65,10 +65,7 @@ public class shootNMove extends LinearOpMode {
 
             while (opModeIsActive() && timer.milliseconds() < 600) {idle();}
 
-            robot.drivetrain.fl.setPower(0);
-            robot.drivetrain.fr.setPower(0);
-            robot.drivetrain.bl.setPower(0);
-            robot.drivetrain.br.setPower(0);
+            robot.stop();
 
         }
     }

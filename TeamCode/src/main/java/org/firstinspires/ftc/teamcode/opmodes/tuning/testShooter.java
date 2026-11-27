@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
-@TeleOp (group = "tuners", name = "shooterTest")
-
+@TeleOp (group = "tuners", name = "Shooter Test")
 public class testShooter extends OpMode {
     Robot robot;
     @Override
@@ -23,6 +22,6 @@ public class testShooter extends OpMode {
 
     @Override
     public void stop() {
-        robot.tC.unsubscribeAll();
+        robot.stop();
     }
 }
